@@ -1,0 +1,70 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.4'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'org.flywaydb.flyway' version '6.4.3'
+    id 'nu.studer.jooq' version '8.1'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-jooq'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'com.mysql:mysql-connector-j:8.0.32'
+    implementation 'org.flywaydb:flyway-mysql'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    jooqGenerator 'com.mysql:mysql-connector-j:8.0.32'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+jooq {
+    configurations {
+        main {
+            generationTool {
+                logging = org.jooq.meta.jaxb.Logging.WARN
+                jdbc {
+                    driver = 'com.mysql.cj.jdbc.Driver'
+                    url = 'jdbc:mysql://localhost:3306/shop_db'
+                    user = 'root'
+                    password = 'xkmjr3m3'
+                }
+                generator {
+                    name = 'org.jooq.codegen.DefaultGenerator'
+                    database {
+                        includes = '.*'
+                        excludes = ''
+                    }
+                    target {
+                        packageName = 'com.example.labshop'
+                    }
+                    strategy.name = "org.jooq.codegen.DefaultGeneratorStrategy"
+                }
+            }
+        }
+    }
+}
+
+flyway {
+    url = 'jdbc:mysql://localhost:3306'
+    user = 'root'
+    password = 'xkmjr3m3'
+    schemas = ['shop_db']
+}
+
+generateJooq.dependsOn flywayMigrate
