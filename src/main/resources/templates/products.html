@@ -115,36 +115,74 @@
 </nav>
 <!-- Header-->
 <header class="bg-dark pt-4 pb-0">
-  <div class="container px-4 px-lg-5 my-3">
+  <div class="container px-4 px-lg-5 my-5">
     <div class="text-center text-white">
-      <h4 class="display-5 fw-bolder">Канцелярские товары для школы и офиса</h4>
+      <h1 class="display-5 fw-bolder">Канцелярские товары для школы и офиса</h1>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row height d-flex justify-content-center align-items-center">
+      <div class="col-md-8">
+        <form
+                th:method="get"
+                th:action="@{/search}"
+                th:object="${searchModel}">
+          <div class="search">
+            <label>
+              <input type="text" class="form-control" placeholder="Название товара" th:field="*{keyword}">
+            </label>
+            <label>
+              <input type="number" class="form-control-sm" placeholder="Цена от" th:field="*{minCost}">
+              <input type="number" class="form-control-sm" placeholder="Цена до" th:field="*{maxCost}">
+              <select class="form-select" th:field="*{new}">
+                <option value="true">Сначала новые</option>
+                <option value="false">Сначала старые</option>
+              </select>
+            </label>
+            <button class="btn btn-outline-light">Найти</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </header>
 
-<div class="container">
-  <div>
-    <form th:object="${product}">
-      <div class="row">
-        <div class="row row-cols-md-3">
-          <img class="figure-img" th:scr="${product.photo.path}"/>
-        </div>
-        <div class="row row-cols-md-3">
-          <i class="text-center" th:text="${product.name}"></i>
-        </div>
-        <div class="row row-cols-md-3">
-          <i class="text-center" th:text="${product.category}"></i>
-        </div>
-        <div class="row row-cols-md-3">
-          <i class="text-center" th:text="${product.cost} + 'р'"></i>
-        </div>
-        <div class="row row-cols-md-3">
-          <i class="text-center" th:text="${product.additionalInfo}"></i>
+
+<!-- Section-->
+<section class="py-5">
+  <div class="container px-4 px-lg-5 mt-5">
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+      <div th:switch="${#lists.size(products)}">
+        <span class="text-center" th:case="0">Нет товаров</span>
+        <div th:case="*" th:each="product : ${products}">
+          <div class="col mb-5">
+            <div class="card h-100">
+              <!-- Product image-->
+              <img class="card-img-top" th:src="${product.getPhotosPaths().get(0)}" alt=""/>
+              <!-- Product details-->
+              <div class="card-body p-4">
+                <div class="text-center">
+                  <!-- Product name-->
+                  <h5 class="fw-bolder">
+                    <th:block th:text="${product.getName()}"></th:block>
+                  </h5>
+                  <!-- Product price-->
+                  <th:block th:number="${product.getCost()}"></th:block>
+                </div>
+              </div>
+              <!-- Product actions-->
+              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center">
+                  <a class="btn btn-outline-dark mt-auto" href="#">Подробнее</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </form>
+    </div>
   </div>
-</div>
+</section>
 <!-- Footer-->
 <footer class="py-3 bg-dark flex-grow-1 fixed-bottom">
   <div class="container">

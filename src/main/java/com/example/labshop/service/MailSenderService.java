@@ -22,7 +22,7 @@ public class MailSenderService {
                 """
                 Привет, %s!
                 Перейди по ссылке ниже, чтобы подтвердить свою эл.почту:
-                http://localhost:8080/activate-email/{code}
+                https://6ba8-146-120-15-164.eu.ngrok.io/activate-email/{code}
                 
                 С уважением, Магазин Канцелярских Товаров:)
                 """,

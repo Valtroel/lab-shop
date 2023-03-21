@@ -2,13 +2,28 @@ package com.example.labshop.model;
 
 public class PhotoModel {
 
-    private final Long id;
-    private final Long productId;
-    private final String path;
+    private Long id;
+    private Long productId;
+    private String path;
 
     public PhotoModel(Long id, Long productId, String path) {
         this.id = id;
         this.productId = productId;
+        this.path = path;
+    }
+
+    public PhotoModel() {
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public void setPath(String path) {
         this.path = path;
     }
 

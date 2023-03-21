@@ -14,7 +14,7 @@ public class OrderMapper {
                 .stream()
                 .map(productModel -> {
                     OrdersRecord record = new OrdersRecord();
-                    record.setUserId(orderModel.getUserId());
+
                     record.setOrderDate(orderModel.getOrderDate());
                     record.setTotalCost(orderModel.getTotalCost());
                     record.setProductId(productModel.getId());
@@ -25,7 +25,27 @@ public class OrderMapper {
 
 
     public OrderModel toModel(List<OrdersRecord> ordersRecords) {
-
         return null;
     }
+//     new OrderModel(
+//            record.value1(),
+//                                record.value2(),
+//                                        record.value3(),
+//                                        List.of(new ProductModel(
+//            record.value4(),
+//                                                record.value5(),
+//                                                        record.value6(),
+//                                                        record.value7(),
+//                                                        List.of(
+//                                                        new PhotoModel(
+//            record.value8(),
+//                                                                record.value4(),
+//                                                                        record.value9()
+//                                                                        )
+//                                                                        )
+//                                                                        )
+//                                                                        )
+//                                                                        )
+//}
+
 }

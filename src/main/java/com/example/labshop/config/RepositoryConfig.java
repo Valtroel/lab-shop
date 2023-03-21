@@ -23,16 +23,21 @@ public class RepositoryConfig {
 
     @Bean
     public ProductRepository productRepository(){
-        return new DefaultProductRepository(dslContext, new ProductMapper());
+        return new DefaultProductRepository(dslContext, new ProductMapper(), productCategoryRepository(), photoRepository());
     }
 
     @Bean
     public OrderRepository orderRepository(){
-        return new DefaultOrderRepository(dslContext, new OrderMapper());
+        return new DefaultOrderRepository(dslContext, new OrderMapper(), userRepository());
     }
 
     @Bean
     public PhotoRepository photoRepository(){
         return new DefaultPhotoRepository(dslContext);
+    }
+
+    @Bean
+    public ProductCategoryRepository productCategoryRepository(){
+        return new DefaultProductCategoryRepository(dslContext);
     }
 }

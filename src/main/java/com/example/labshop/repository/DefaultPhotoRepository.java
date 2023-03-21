@@ -20,33 +20,23 @@ public class DefaultPhotoRepository implements PhotoRepository {
 
     @Override
     public boolean savePhotos(ProductModel productModel, Long productId) {
-        List<PhotoModel> photosPaths = productModel.getPhotos();
-        List<Integer> resultsOfInsertion = photosPaths
-                .stream()
-                .map(path -> dslContext
-                        .insertInto(PHOTOS)
-                        .set(PHOTOS.PRODUCT_ID, productId)
-                        .set(PHOTOS.PATH, path.getPath())
-                        .execute()
-                )
-                .toList();
-        return resultsOfInsertion.size() >= SUCCESS_INDICATOR;
+        return dslContext
+                .insertInto(PHOTOS)
+                .set(PHOTOS.PRODUCT_ID, productId)
+                .set(PHOTOS.PATH, productModel.getPhoto().getPath())
+                .execute() >= SUCCESS_INDICATOR;
     }
 
     @Override
     public boolean updatePhotos(ProductModel productModel) {
-        List<PhotoModel> photosPaths = productModel.getPhotos();
-        List<Integer> resultsOfInsertion = photosPaths
-                .stream()
-                .map(path -> dslContext
-                        .update(PHOTOS)
-                        .set(PHOTOS.PRODUCT_ID, productModel.getId())
-                        .set(PHOTOS.PATH, path.getPath())
-                        .where(PHOTOS.PRODUCT_ID.eq(productModel.getId()))
-                        .execute()
-                )
-                .toList();
-        return resultsOfInsertion.size() >= SUCCESS_INDICATOR;
+        return dslContext
+                .update(PHOTOS)
+                .set(PHOTOS.PRODUCT_ID, productModel.getId())
+                .set(PHOTOS.PATH, productModel.getPhoto().getPath())
+                .where(PHOTOS.PRODUCT_ID.eq(productModel.getId()))
+                .execute()
+                == SUCCESS_INDICATOR;
+
     }
 
     @Override

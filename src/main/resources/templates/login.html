@@ -24,12 +24,12 @@
                                     th:action="@{/login}"
                                     th:object="${user}">
                                 <div class="form-outline mb-4 p-md-1">
-                                    <input type="email" id="form3Example3cg" class="form-control form-control"
+                                    <input type="text" id="email" name="email" class="form-control form-control"
                                            placeholder="Эл.почта" th:field="*{email}"/>
                                 </div>
 
                                 <div class="form-outline mb-4 p-md-1">
-                                    <input type="password" id="form3Example4cg" class="form-control form-control"
+                                    <input type="text" id="password" name="password" class="form-control form-control"
                                            placeholder="Пароль" th:field="*{password}"/>
                                 </div>
 

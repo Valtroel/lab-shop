@@ -27,54 +27,6 @@
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
             class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Главная</a></li>
-        <li class="nav-item"><a class="nav-link" th:href="@{/about-us}">О нас</a></li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
-             data-bs-toggle="dropdown" aria-expanded="false">Категории</a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown" th:switch="${#lists.size(categories)}">
-            <th:block th:case="0">
-              <li>
-                <form
-                        th:method="post"
-                        sec:authoriza="isAuthenticated() && hasAuthority('ADMIN')"
-                        th:action="@{/add-category}"
-                        th:object="${addCategory}">
-                  <div class="align-items-center">
-                    <label>
-                      <input type="text" class="form-control" placeholder="Название категории" th:field="*{categoryName}">
-                    </label>
-                    <button type="submit" class="btn btn-outline-success">Добавить</button>
-                  </div>
-                </form>
-              </li>
-            </th:block>
-            <th:block th:case="*" th:each="category: ${categories}">
-              <li>
-                <a class="dropdown-item" th:href="@{'/products/' + ${category.getCategoryName()}}"
-                   th:text="${category.getCategoryName()}">
-                </a>
-                <i class="bi bi-x-lg" type="button" th:action="@{'/delete-category/' + ${category.getId()}}" th:method="post"></i>
-              </li>
-            </th:block>
-            <li>
-              <form
-                      th:method="post"
-                      sec:authoriza="isAuthenticated() && hasAuthority('ADMIN')"
-                      th:action="@{/add-category}"
-                      th:object="${addCategory}">
-                <div class="align-items-center">
-                  <label>
-                    <input type="text" class="form-control" placeholder="Название категории" th:field="*{categoryName}">
-                  </label>
-                  <button type="submit" class="btn btn-outline-success">Добавить</button>
-                </div>
-              </form>
-            </li>
-          </ul>
-        </li>
-      </ul>
       <form class="d-flex"></span>
         <button class="btn btn-outline-dark m-lg-1" type="submit"
                 sec:authorize="!isAuthenticated()||hasAnyAuthority('USER')">
@@ -113,38 +65,68 @@
     </div>
   </div>
 </nav>
-<!-- Header-->
-<header class="bg-dark pt-4 pb-0">
-  <div class="container px-4 px-lg-5 my-3">
-    <div class="text-center text-white">
-      <h4 class="display-5 fw-bolder">Канцелярские товары для школы и офиса</h4>
-    </div>
-  </div>
-</header>
 
-<div class="container">
-  <div>
-    <form th:object="${product}">
-      <div class="row">
-        <div class="row row-cols-md-3">
-          <img class="figure-img" th:scr="${product.photo.path}"/>
-        </div>
-        <div class="row row-cols-md-3">
-          <i class="text-center" th:text="${product.name}"></i>
-        </div>
-        <div class="row row-cols-md-3">
-          <i class="text-center" th:text="${product.category}"></i>
-        </div>
-        <div class="row row-cols-md-3">
-          <i class="text-center" th:text="${product.cost} + 'р'"></i>
-        </div>
-        <div class="row row-cols-md-3">
-          <i class="text-center" th:text="${product.additionalInfo}"></i>
+  <div class="container pt-5">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+      <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-10 col-md-12 col-lg-9 col-xl-6">
+            <div class="card" style="border-radius: 15px;">
+              <div class="card-body p-4 rounded-3">
+                <h2 class="text-start text-center mb-4 pt-2">Добавление товара</h2>
+                <form
+                        th:method="post"
+                        th:action="@{/create-product}"
+                        th:object="${product}"
+                        enctype="multipart/form-data">
+                  <div class="form-outline mb-4 p-md-1">
+                    <input type="text" id="form3Example1cg" class="form-control form-control"
+                           placeholder="Название" th:field="*{name}"/>
+                  </div>
+
+                  <th:block th:switch="${#lists.size(categories)}">
+                    <div th:case="0">
+                      <div class="form-outline mb-4 p-md-1">
+                        <input type="text" id="form3Example3cg" class="form-control form-control"
+                               placeholder="Категория товара" th:field="*{category}"/>
+                      </div>
+                    </div>
+                    <div th:case="*">
+                      <div class="form-outline mb-4 p-md-1">
+                        <select class="form-select" aria-label=".form-select-sm example"
+                                th:field="*{category}" >
+                          <option th:each="category: ${categories}" th:value="${category.categoryName}" th:text="${category.categoryName}"></option>
+                        </select>
+                      </div>
+                    </div>
+                  </th:block>
+                  <div class="form-outline mb-4 p-md-1">
+                    <input type="number" id="form3Example4cg" class="form-control form-control"
+                           placeholder="Цена(в Рублях)" th:field="*{cost}"/>
+                  </div>
+                  <div class="form-outline mb-4 p-md-1">
+                    <input type="text" id="form3Example1cg" class="form-control form-control"
+                           placeholder="Дополнительная информация" th:field="*{additionalInfo}"/>
+                  </div>
+
+                    <div class="form-group">
+                      <input type="file" name="image" accept="image/*" class="form-control-file">
+                    </div>
+
+                  <div class="d-flex justify-content-center mt-3">
+                    <button type="submit"
+                            class="btn btn-dark btn-block btn-lg text-white">
+                      Добавить
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </form>
+    </div>
   </div>
-</div>
 <!-- Footer-->
 <footer class="py-3 bg-dark flex-grow-1 fixed-bottom">
   <div class="container">

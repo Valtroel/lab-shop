@@ -1,6 +1,7 @@
 package com.example.labshop.controller;
 
 import com.example.labshop.enumeration.AuthUserInfo;
+import com.example.labshop.model.ProductCategoryModel;
 import com.example.labshop.model.UserModel;
 import com.example.labshop.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller("/auth")
@@ -64,6 +66,12 @@ public class AuthController {
             return "/login";
         }
         model.addAttribute("user", user);
+        model.addAttribute("addCategory", new ProductCategoryModel());
         return "redirect:/index";
+    }
+
+    @GetMapping("/activate-email/{code}")
+    public String activateEmail(@PathVariable String code){
+        return "/index";
     }
 }

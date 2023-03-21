@@ -15,6 +15,8 @@ public interface ProductRepository {
 
     List<ProductModel> findProductsByCost(Double minCost, Double maxCost, Boolean firstNewProducts);
 
+    List<ProductModel> findProductsByCategory(String category);
+
     List<ProductModel> findProductsByUserEmail(String email);
 
 }

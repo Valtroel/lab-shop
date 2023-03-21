@@ -28,17 +28,4 @@ public class UserController {
                 .body(userService.createUser(userModel).getMessage());
     }
 
-
-    @PostMapping("/changeRole")
-    public ResponseEntity<Boolean> changeUserRole(@RequestParam String userId){
-        return ResponseEntity
-                .ok()
-                .body(true);
-    }
-
-    @GetMapping("/users")
-    public String getUsers(Model model){
-        List<UserModel> users = userService.getAllUsers();
-        return "/";
-    }
 }

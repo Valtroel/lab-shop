@@ -11,5 +11,8 @@ public interface OrderRepository {
     boolean deleteOrder(OrderModel orderModel);
     OrderModel findOrderByUserId(Long userId);
 
+    OrderModel findOrderById(Long id);
+
+    List<OrderModel> findAllOrders();
     List<OrderModel> findOrderByUserEmail(String email);
 }

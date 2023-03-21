@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserModel user = userRepository.findUserByNickname(username);
+        UserModel user = userRepository.findUserByEmail(username);
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
                 user.getAuthorities());
     }
