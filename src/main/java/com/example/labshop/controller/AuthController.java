@@ -4,6 +4,7 @@ import com.example.labshop.enumeration.AuthUserInfo;
 import com.example.labshop.model.ProductCategoryModel;
 import com.example.labshop.model.UserModel;
 import com.example.labshop.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -53,8 +54,9 @@ public class AuthController {
 
     @PostMapping("/login")
     public String loginUser(@ModelAttribute UserModel user,
-                               BindingResult result,
-                               Model model){
+                            BindingResult result,
+                            Model model,
+                            HttpSession session){
         AuthUserInfo authStatus = userService.verifyUserLoginData(user);
 
         if (!authStatus.getMessage().equals(AuthUserInfo.SUCCESS.getMessage())){
@@ -67,6 +69,7 @@ public class AuthController {
         }
         model.addAttribute("user", user);
         model.addAttribute("addCategory", new ProductCategoryModel());
+        session.setAttribute("user", user);
         return "redirect:/index";
     }
 

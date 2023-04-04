@@ -8,80 +8,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-    <title>Магазин канцелярских товаров</title>
+    <title>Holz&Steel</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="assets/saw-icon.ico"/>
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+    <link th:href="@{/css/additionals.css}" rel="stylesheet">
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Montserrat">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+    </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-4">
-        <a class="navbar-brand" th:href="@{/index}">Магазин канцелярских товаров</a>
+        <a class="navbar-brand" th:href="@{/index}"><h4>Holz&Steel</h4></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
                 class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Главная</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">Категории</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" th:switch="${#lists.size(categories)}">
-                        <th:block th:case="0">
-                            <li>
-                                <form
-                                        th:method="post"
-                                        sec:authoriza="isAuthenticated() && hasAuthority('ADMIN')"
-                                        th:action="@{/add-category}"
-                                        th:object="${addCategory}">
-                                    <div class="align-items-center">
-                                        <label>
-                                            <input type="text" class="form-control" placeholder="Название категории" th:field="*{categoryName}">
-                                        </label>
-                                        <button type="submit" class="btn btn-outline-success">Добавить</button>
-                                    </div>
-                                </form>
-                            </li>
-                        </th:block>
-                        <th:block th:case="*" th:each="category: ${categories}">
-                            <li>
-                                <a class="dropdown-item" th:href="@{'/products/' + ${category.getCategoryName()}}"
-                                   th:text="${category.getCategoryName()}">
-                                </a>
-                                <i class="bi bi-x-lg" type="button" th:action="@{'/delete-category/' + ${category.getId()}}" th:method="post"></i>
-                            </li>
-                        </th:block>
-                        <li>
-                            <form
-                                    th:method="post"
-                                    sec:authoriza="isAuthenticated() && hasAuthority('ADMIN')"
-                                    th:action="@{/add-category}"
-                                    th:object="${addCategory}">
-                                <div class="align-items-center">
-                                    <label>
-                                        <input type="text" class="form-control" placeholder="Название категории" th:field="*{categoryName}">
-                                    </label>
-                                    <button type="submit" class="btn btn-outline-success">Добавить</button>
-                                </div>
-                            </form>
-                        </li>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Ленточные пилы</a></li>
+                        <li><a class="dropdown-item" href="#">Дисковые пилы</a></li>
+                        <li><a class="dropdown-item" href="#">Оборудование</a></li>
                     </ul>
                 </li>
             </ul>
             <form class="d-flex">
-                <a class="btn btn-outline-dark m-lg-1" th:href="@{/create-product-form}">
+                <a class="btn btn-outline-dark m-lg-1" th:href="@{/create-product-form}"
+                   sec:authorize="hasAnyAuthority('ADMIN')">
                     <i class="bi bi-bag-plus"></i>
                     Добавить товар
                 </a>
-                <button class="btn btn-outline-dark m-lg-1" type="submit"
+                <button class="btn btn-outline-dark m-lg-1 " type="submit"
                         sec:authorize="!isAuthenticated()||hasAnyAuthority('USER')"
-                th:href="@{/shopping-cart}">
+                        th:href="@{/shopping-cart}">
                     <i class="bi-cart-fill me-1"></i>
                     <span class="badge bg-dark text-white ms-1 rounded-pill">
                         <th:block th:number="${#lists.size(orders)}"></th:block>
@@ -118,60 +93,83 @@
     </div>
 </nav>
 <!-- Header-->
-<header class="bg-dark pt-4 pb-0">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-            <h1 class="display-5 fw-bolder">Канцелярские товары для школы и офиса</h1>
-            <p class="lead fw-normal text-white-50 mb-0">
-                <small>
-                    <em>
-                        У нас вы найдете все необходимое для учебы и работы: ручки, карандаши, блокноты, скрепки и
-                        многое
-                        другое
-                    </em>
-                </small>
-            </p>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row height d-flex justify-content-center align-items-center">
-            <div class="col-md-8">
-                <form
-                        th:method="get"
-                        th:action="@{/search}"
-                        th:object="${searchModel}">
-                    <div class="search">
-                        <label>
-                            <input type="text" class="form-control" placeholder="Название товара" th:field="*{keyword}">
-                        </label>
-                        <label>
-                            <input type="number" class="form-control-sm" placeholder="Цена от" th:field="*{minCost}">
-                            <input type="number" class="form-control-sm" placeholder="Цена до" th:field="*{maxCost}">
-                            <select class="form-select" th:field="*{new}">
-                                <option value="true">Сначала новые</option>
-                                <option value="false">Сначала старые</option>
-                            </select>
-                        </label>
-                        <button class="btn btn-outline-light">Найти</button>
-                    </div>
-                </form>
+<header class="bg-gradient-info">
+
+    <div class="container-fluid custom-carousel" style="{
+    display: flex;
+    max-height: 500px !important;
+    }">
+        <div id="carouselExampleControls" class="carousel slide carousel-fade carousel-dark" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
             </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="uploads/first_slide.jpg" class="d-block w-100" alt="" style="object-fit: cover;">
+                </div>
+                <div class="carousel-item" style="object-fit: cover;">
+                    <img src="uploads/second_slide.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item" style="object-fit: cover;">
+                    <img src="uploads/third_slide.jpg" class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
     </div>
+    <!-- <div class="container">
+         <div class="row height d-flex justify-content-center align-items-center">
+             <div class="col-md-8">
+                 <form
+                         th:method="get"
+                         th:action="@{/search}"
+                         th:object="${searchModel}">
+                     <div class="search">
+                         <label>
+                             <input type="text" class="form-control" placeholder="Название товара" th:field="*{keyword}">
+                         </label>
+                         <label>
+                             <input type="number" class="form-control-sm" placeholder="Цена от" th:field="*{minCost}">
+                             <input type="number" class="form-control-sm" placeholder="Цена до" th:field="*{maxCost}">
+                             <select class="form-select" th:field="*{new}">
+                                 <option value="true">Сначала новые</option>
+                                 <option value="false">Сначала старые</option>
+                             </select>
+                         </label>
+                         <button class="btn btn-outline-light">Найти</button>
+                     </div>
+                 </form>
+             </div>
+         </div>
+     </div> -->
 </header>
 
 
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center align-content-center">
             <div th:switch="${#lists.size(products)}">
                 <span class="text-center" th:case="0">Нет товаров</span>
                 <div th:case="*" th:each="product : ${products}">
                     <div class="col mb-5">
                         <div class="card h-100">
                             <!-- Product image-->
-                            <img class="card-img-top" th:src="${product.photo.path}" alt=""/>
+                            <img class="card-img-top" src="" th:src="${product.photo.path}" alt=""/>
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">
@@ -200,9 +198,17 @@
     </div>
 </section>
 <!-- Footer-->
-<footer class="py-3 bg-dark flex-grow-1 fixed-bottom">
+<footer class="py-3 bg-light flex-grow-1 fixed-bottom">
+    <div class="container align-content-center text-center">
+        <a class="icon-link" href="mailto:most-bel@mail.ru">
+            <i class="bi bi-envelope">Пишите</i>
+        </a>
+        <a class="icon-link" href="tel:+375(25)512-65-83">
+            <i class="bi bi-telephone-inbound">Звоните</i>
+        </a>
+    </div>
     <div class="container">
-        <p class="m-2 text-center text-white">Copyright &copy; Магазин канцелярских товаров 2023</p>
+        <p class="m-2 text-center text-black">Copyright&copy; ООО «Торговый дом «МОСТ»» 2023</p>
     </div>
 </footer>
 <!-- Bootstrap core JS-->

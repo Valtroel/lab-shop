@@ -1,10 +1,13 @@
 package com.example.labshop.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.CacheControl;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableWebMvc
@@ -28,14 +31,15 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
-        registry.addResourceHandler("/uploads/**").addResourceLocations("classpath:/resources/templates/uploads/");
-        registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/resources/");
-        registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
-        registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/static/assets/");
-        registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
-        registry.addResourceHandler("/*.html").addResourceLocations("classpath:/static/templates/")
-                .setCachePeriod(0);
+        registry.addResourceHandler("/resources/**").addResourceLocations("file:src/main/resources/");
+        registry.addResourceHandler("/css/**").addResourceLocations("file:src/main/resources/templates/css/");
+        registry.addResourceHandler("/assets/**").addResourceLocations("file:src/main/resources/templates/assets/");
+        registry.addResourceHandler("/js/**").addResourceLocations("file:src/main/resources/templates/js/");
+        registry.addResourceHandler("/*.html").addResourceLocations("file:src/main/resources/templates/");
+        registry.addResourceHandler("/resources/**").addResourceLocations("file:src/main/resources/");
+        registry.addResourceHandler("/uploads/**").addResourceLocations("file:src/main/resources/templates/uploads/")
+                .setCacheControl(CacheControl.maxAge(2, TimeUnit.HOURS).cachePublic());
+
     }
 
 }
