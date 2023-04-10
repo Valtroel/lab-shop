@@ -33,7 +33,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-4">
         <a class="navbar-brand" th:href="@{/index}">
-            <img src="assets/logo.png" alt="no logo" style="width: 90px">
+            Главная
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
@@ -55,8 +55,8 @@
                 </a>
             </div>
             <div sec:authorize="isAnonymous()||isAuthenticated()">
-                <a class="btn btn-outline-dark m-lg-1" th:href="@{/requisites}">
-                    Реквизиты
+                <a class="btn btn-dark m-lg-1" disabled="true">
+                    О нас
                 </a>
             </div>
             <form class="d-flex justify-content-end">
@@ -103,111 +103,30 @@
         </div>
     </div>
 </nav>
-<!-- Header-->
-<header class="bg-gradient-info">
-
-    <div class="container-fluid custom-carousel" style="{
-    display: flex;
-    max-height: 500px !important;
-    }">
-        <div id="carouselExampleControls" class="carousel slide carousel-fade carousel-dark" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
-                        aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
-                        aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
-                        aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active" style="width: 1000px;">
-                    <img src="uploads/first_slide.jpg" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item" style="width: 1000px;">
-                    <img src="uploads/second_slide.jpg" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item" style="width: 1000px;">
-                    <img src="uploads/third_slide.jpg" class="d-block w-100" alt="...">
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
-                    data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-                    data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    </div>
-    <!-- <div class="container">
-         <div class="row height d-flex justify-content-center align-items-center">
-             <div class="col-md-8">
-                 <form
-                         th:method="get"
-                         th:action="@{/search}"
-                         th:object="${searchModel}">
-                     <div class="search">
-                         <label>
-                             <input type="text" class="form-control" placeholder="Название товара" th:field="*{keyword}">
-                         </label>
-                         <label>
-                             <input type="number" class="form-control-sm" placeholder="Цена от" th:field="*{minCost}">
-                             <input type="number" class="form-control-sm" placeholder="Цена до" th:field="*{maxCost}">
-                             <select class="form-select" th:field="*{new}">
-                                 <option value="true">Сначала новые</option>
-                                 <option value="false">Сначала старые</option>
-                             </select>
-                         </label>
-                         <button class="btn btn-outline-light">Найти</button>
-                     </div>
-                 </form>
-             </div>
-         </div>
-     </div> -->
-</header>
-
-
-<!-- Section-->
-<section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center align-content-center">
-            <div th:switch="${#lists.size(products)}">
-                <span class="text-center" th:case="0">Нет товаров</span>
-                <div th:case="*" th:each="product : ${products}">
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="" th:src="${product.photo.path}" alt=""/>
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">
-                                        <th:block th:text="${product.name}"></th:block>
-                                    </h5>
-                                    <!-- Product price-->
-                                    <th:block th:number="${product.cost}"></th:block>
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="d-block card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center">
-                                    <a class="btn btn-outline-dark mt-auto" th:href="@{/add-to-cart}">В корзину</a>
-                                </div>
-                                <div class="text-center">
-                                    <a class="btn btn-outline-dark mt-auto" th:href="@{/product-info}">Подробнее</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<div class="container">
+    <ul class="list-group list-group-flush d-flex justify-content-center text-center my-5 py-5">
+        <li class="list-group-item pb-5">
+            <img src="assets/logo.png" alt="...">
+        </li>
+        <li class="list-group-item">
+            ООО «Торговый дом «МОСТ»»
+        </li>
+        <li class="list-group-item">
+            Юридический и почтовый адрес:
+            223053, Минская область, Минский район, Боровлянский с/с, д.1, каб.441, район д.Боровая, корпус главный
+        </li>
+        <li class="list-group-item">
+            Банковские реквизиты:
+            р/с BY07 UNBS 3012 0421 2100 1001 0933 в
+            ЗАО «БСБ Банк», БИК: UNBSBY2X
+            пр-т Победителей, д.23/3.
+        </li>
+        <li class="list-group-item">
+            УНН 692 160 924
+            ОКПО 504058486000
+        </li>
+    </ul>
+</div>
 <!-- Footer-->
 <footer class="py-3 bg-light flex-grow-1 fixed-bottom">
     <div class="container align-content-center text-center">

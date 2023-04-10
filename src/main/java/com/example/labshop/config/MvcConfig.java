@@ -27,6 +27,7 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/private-area-users").setViewName("private-area-users");
         registry.addViewController("/private-area-orders").setViewName("private-area-orders");
         registry.addViewController("/private-area-search-order").setViewName("private-area-search-order");
+        registry.addViewController("/requisites").setViewName("requisites");
     }
 
     @Override

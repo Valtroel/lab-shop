@@ -26,7 +26,7 @@ public class MainController {
         this.productCategoryRepository = productCategoryRepository;
     }
 
-    @PreAuthorize("isAnonymous()&&isAuthenticated()")
+    @PreAuthorize("isAnonymous()||isAuthenticated()")
     @GetMapping(value = {"/"})
     public String index(@ModelAttribute UserModel userModel, Model model) {
         List<ProductModel> productModels = productRepository.findAllProducts(10, 0);
@@ -42,7 +42,7 @@ public class MainController {
     }
 
 
-    @PreAuthorize("isAnonymous()&&isAuthenticated()")
+    @PreAuthorize("isAnonymous()||isAuthenticated()")
     @GetMapping(value = {"/search"})
     public String search(@ModelAttribute UserModel userModel, Model model, @ModelAttribute("searchModel") SearchModel searchModel) {
         List<ProductModel> productModels;
@@ -62,5 +62,11 @@ public class MainController {
         model.addAttribute("user", userModel);
         model.addAttribute("addCategory", new ProductCategoryModel());
         return "/index";
+    }
+
+    @PreAuthorize("isAnonymous()||isAuthenticated()")
+    @GetMapping("/requisites")
+    public String about(){
+        return "requisites";
     }
 }

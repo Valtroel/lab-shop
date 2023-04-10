@@ -1,6 +1,7 @@
 package com.example.labshop.service;
 
 import com.example.labshop.enumeration.AuthUserInfo;
+import com.example.labshop.enumeration.UserRole;
 import com.example.labshop.model.UserModel;
 import com.example.labshop.repository.UserRepository;
 import com.example.labshop.service.validator.UserParamsValidator;
@@ -32,7 +33,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserModel user = userRepository.findUserByNickname(username);
+        UserModel user = userRepository.findUserByEmail(username);
         if (user == null){
             throw new UsernameNotFoundException("Пользователя с таким(" + username + ") именем не существует");
         }
@@ -56,6 +57,7 @@ public class UserService implements UserDetailsService {
         }
         String hashedPassword = PasswordUtil.hashPassword(userModel.getPassword());
         userModel.setPassword(hashedPassword);
+        userModel.setRole(UserRole.USER);
         userRepository.saveUser(userModel);
         log.info(SUCCESS.getMessage());
         return SUCCESS;
