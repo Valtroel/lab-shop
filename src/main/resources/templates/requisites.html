@@ -30,82 +30,45 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 <!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-image: url('uploads/saw_circular.jpg');">
     <div class="container px-4 px-lg-4">
-        <a class="navbar-brand" th:href="@{/index}">
-            Главная
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
-                class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div sec:authorize="isAnonymous()||isAuthenticated()">
-                <a class="btn btn-outline-dark m-lg-1" th:href="@{/}">
-                    Ленточные пилы
+        <div class="row-vertical justify-content-lg-start">
+            <div class="col">
+                <a class="navbar-brand" th:href="@{/index}">
+                    <!-- <img src="assets/logo.png" alt="no logo" style="width: 90px"> -->
+                    <h4 class="text-white mt-3">ООО Торговый дом МОСТ</h4>
                 </a>
             </div>
-            <div sec:authorize="isAnonymous()||isAuthenticated()">
-                <a class="btn btn-outline-dark m-lg-1" th:href="@{/}">
-                    Дисковые пилы
-                </a>
-            </div>
-            <div sec:authorize="isAnonymous()||isAuthenticated()">
-                <a class="btn btn-outline-dark m-lg-1" th:href="@{/}">
-                    Оборудование
-                </a>
-            </div>
-            <div sec:authorize="isAnonymous()||isAuthenticated()">
-                <a class="btn btn-dark m-lg-1" disabled="true">
-                    О нас
-                </a>
-            </div>
-            <form class="d-flex justify-content-end">
-                <a class="btn btn-outline-dark m-lg-1" th:href="@{/create-product-form}"
-                   sec:authorize="hasAnyAuthority('ADMIN')">
-                    <i class="bi bi-bag-plus"></i>
-                    Добавить товар
-                </a>
-                <button class="btn btn-outline-dark m-lg-1 " type="submit"
-                        sec:authorize="!isAuthenticated()||hasAnyAuthority('USER')"
-                        th:href="@{/shopping-cart}">
-                    <i class="bi-cart-fill me-1"></i>
-                    <span class="badge bg-dark text-white ms-1 rounded-pill">
-                        <th:block th:number="${#lists.size(orders)}"></th:block>
-                    </span>
-                </button>
-                <div sec:authorize="!isAuthenticated()">
-                    <a class="btn btn-outline-dark m-lg-1" th:href="@{/login}">
-                        <i class="bi bi-box-arrow-in-left"></i>
-                        Войти
-                    </a>
-                    <a class="btn btn-outline-dark m-lg-1 text-sm-end" th:href="@{/register}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-person-add" viewBox="0 0 16 16">
-                            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
-                            <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"/>
-                        </svg>
-                        Регистрация
-                    </a>
+            <div class="col">
+                <button class="navbar-toggler " type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Toggle navigation"><span
+                        class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse mt-2" id="navbarSupportedContent">
+                    <div class="btn-group-vertical">
+                        <a class="btn btn-outline-dark m-lg-1 text-white-50" th:href="@{/}">
+                            Ленточные пилы
+                        </a>
+                        <a class="btn btn-outline-dark m-lg-1 text-white-50" th:href="@{/}">
+                            Дисковые пилы
+                        </a>
+                        <a class="btn btn-outline-dark m-lg-1 text-white-50" th:href="@{/}">
+                            Оборудование
+                        </a>
+                        <a class="btn btn-dark m-lg-1 text-white disabled" th:href="@{/requisites}">
+                            Реквизиты
+                        </a>
+                    </div>
                 </div>
-                <div sec:authorize="hasAnyAuthority('ADMIN')">
-                    <a class="btn btn-outline-dark m-lg-1" th:href="@{/private-area}">
-                        <i class="bi bi-door-open"></i>
-                        Личный кабинет
-                    </a>
-                </div>
-                <div sec:authorize="isAuthenticated()">
-                    <a class="btn btn-outline-dark m-lg-1" th:href="@{/logout}">
-                        <i class="bi bi-box-arrow-right"></i>
-                        Выйти
-                    </a>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </nav>
-<div class="container">
-    <ul class="list-group list-group-flush d-flex justify-content-center text-center my-5 py-5">
-        <li class="list-group-item pb-5">
+
+<div class="container" >
+    <ul class="list-group list-group-flush d-flex justify-content-center text-start pb-3 pt-3">
+        <li class="list-group-item" >
             <img src="assets/logo.png" alt="...">
         </li>
         <li class="list-group-item">
@@ -121,24 +84,24 @@
             ЗАО «БСБ Банк», БИК: UNBSBY2X
             пр-т Победителей, д.23/3.
         </li>
-        <li class="list-group-item">
+        <li class="list-group-item mb-3">
             УНН 692 160 924
             ОКПО 504058486000
         </li>
     </ul>
 </div>
 <!-- Footer-->
-<footer class="py-3 bg-light flex-grow-1 fixed-bottom">
+<footer class="py-3 bg-light flex-grow-1 fixed-bottom"  style="background-image: url('uploads/saw_circular.jpg');">
     <div class="container align-content-center text-center">
         <a class="icon-link" href="mailto:most-bel@mail.ru">
-            <i class="bi bi-envelope">Пишите</i>
+            <i class="bi bi-envelope">Написать письмо</i>
         </a>
-        <a class="icon-link" href="tel:+375(25)512-65-83">
-            <i class="bi bi-telephone-inbound">Звоните</i>
+        <a class="icon-link m-2" href="tel:+375(25)512-65-83">
+            <i class="bi bi-telephone-inbound">Позвонить</i>
         </a>
     </div>
     <div class="container">
-        <p class="m-2 text-center text-black">Copyright&copy; ООО «Торговый дом «МОСТ»» 2023</p>
+        <p class="m-2 text-center text-white">Copyright&copy; ООО «Торговый дом «МОСТ»» 2023</p>
     </div>
 </footer>
 <!-- Bootstrap core JS-->
